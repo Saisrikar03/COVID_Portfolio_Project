@@ -21,11 +21,11 @@ https://saisrikar03.github.io/COVID_Portfolio_Project/
 • Created extra metrics like percent infected and death percentage
 
 📊 What the Dashboard Shows
-• Global totals for cases, deaths and death percentage
+• Global totals for cases, deaths, and death percentage
 • Infection growth over time
-• Vaccination progress and how it affects trends
 • Deaths by continent
 • Country-by-country comparison
+• Insights based on a dataset joined with vaccination data
 • Clean, simple visuals that are easy to explore
 
 🖥️ How to view or edit the dashboard
