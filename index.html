@@ -1,22 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Force HTTPS and block mixed content -->
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content;">
+  <!-- Prevent aggressive caching so updates appear faster -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
   <title>COVID Dashboard</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <style>
-    body{margin:0;padding:0;display:flex;justify-content:center;background:#f5f5f5;}
-    #vizContainer{width:95%;max-width:1400px;margin:20px auto;}
+    /* Simple, responsive container */
+    html, body { height:100%; margin:0; padding:0; font-family: Arial, sans-serif; background:#f5f5f5; }
+    #vizContainer { width:95%; max-width:1400px; margin:20px auto; box-sizing:border-box; }
+    /* Make the tableau object responsive */
+    .tableauViz { display:block; width:100%; border:0; }
+    /* Small screens spacing */
+    @media (max-width:600px) {
+      #vizContainer { margin:10px; }
+    }
   </style>
 </head>
 <body>
   <div id="vizContainer">
+    <!-- Tableau embed block (your embed code, kept HTTPS-only) -->
     <div class='tableauPlaceholder' id='viz1765563357914' style='position: relative'>
       <noscript>
-        <a href='https://public.tableau.com/views/COVIDProjectDashboard_17655620960090/Dashboard1'>
-          <img alt='Dashboard 1' src='https://public.tableau.com/static/images/CO/COVIDProjectDashboard_17655620960090/Dashboard1/1_rss.png' style='border: none' />
+        <a href='https://public.tableau.com/views/COVIDProjectDashboard_17655620960090/Dashboard1' target='_blank' rel='noopener'>
+          <img alt='Dashboard 1' src='https://public.tableau.com/static/images/CO/COVIDProjectDashboard_17655620960090/Dashboard1/1_rss.png' style='border: none; max-width:100%;' />
         </a>
       </noscript>
+
       <object class='tableauViz' style='display:none;'>
         <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
         <param name='embed_code_version' value='3' />
@@ -35,21 +53,36 @@
     </div>
   </div>
 
-  <script type='text/javascript'>
-    (function(){
+  <script type="text/javascript">
+    (function () {
+      // safe responsive sizing + load Tableau script over HTTPS
       var divElement = document.getElementById('viz1765563357914');
+      if (!divElement) return;
       var vizElement = divElement.getElementsByTagName('object')[0];
-      function resizeViz(){
+
+      function resizeViz() {
         if (!vizElement) return;
-        var w = divElement.offsetWidth;
+        var w = divElement.offsetWidth || window.innerWidth;
         vizElement.style.width = '100%';
-        vizElement.style.height = (w > 800 ? w * 0.75 : (w > 500 ? w * 0.75 : 1177)) + 'px';
+        // height ratio chosen to keep dashboard readable
+        vizElement.style.height = (w > 1000 ? w * 0.60 : (w > 600 ? w * 0.75 : 1100)) + 'px';
       }
-      window.addEventListener('resize', resizeViz);
+
+      // initial size
       resizeViz();
+      // update on resize
+      window.addEventListener('resize', resizeViz);
+
+      // load Tableau JS safely over HTTPS
       var scriptElement = document.createElement('script');
       scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-      vizElement.parentNode.insertBefore(scriptElement, vizElement);
+      scriptElement.async = true;
+      // insert script after the object tag to preserve original embed behavior
+      if (vizElement && vizElement.parentNode) {
+        vizElement.parentNode.insertBefore(scriptElement, vizElement.nextSibling);
+      } else {
+        document.head.appendChild(scriptElement);
+      }
     })();
   </script>
 </body>
