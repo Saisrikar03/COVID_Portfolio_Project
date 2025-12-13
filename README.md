@@ -52,3 +52,8 @@ I wanted to build a complete data project that shows:
 
 📬 Contact
 Feel free to reach out or open an issue if you want to discuss this project or suggest improvements.
+
+👤 AUTHOR
+
+Sai Srikar Goranta
+Aspiring Data Analyst | SQL | Data Cleaning | Analytics
